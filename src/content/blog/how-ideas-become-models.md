@@ -3,7 +3,7 @@ title: "A Small Experiment: How Ideas Become Models"
 description: "A practical experiment in turning observations into models, with code, mathematics, images, and a few questions along the way."
 pubDate: "2026-09-21"
 category: "Technology"
-imageUrl: "https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg"
+imageUrl: "https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg"
 imageCredit: "Pexels"
 ---
 ## 1. Start with a question
