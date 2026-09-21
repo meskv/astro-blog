@@ -5,17 +5,10 @@ import path from "node:path";
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATABASE_ID = process.env.NOTION_DATABASE_ID;
 
-if (!NOTION_TOKEN) {
-  throw new Error("Missing NOTION_TOKEN");
-}
+if (!NOTION_TOKEN) throw new Error("Missing NOTION_TOKEN");
+if (!DATABASE_ID) throw new Error("Missing NOTION_DATABASE_ID");
 
-if (!DATABASE_ID) {
-  throw new Error("Missing NOTION_DATABASE_ID");
-}
-
-const notion = new Client({
-  auth: NOTION_TOKEN,
-});
+const notion = new Client({ auth: NOTION_TOKEN });
 
 const BLOG_DIR = path.join(process.cwd(), "src", "content", "blog");
 
@@ -70,11 +63,17 @@ function getSelectProperty(page, name) {
 function getDateProperty(page, name) {
   const property = getProperty(page, name);
 
-  if (!property || property.type !== "date") {
-    return "";
-  }
+  if (!property || property.type !== "date") return "";
 
   return property.date?.start ?? "";
+}
+
+function getUrlProperty(page, name) {
+  const property = getProperty(page, name);
+
+  if (!property || property.type !== "url") return "";
+
+  return property.url ?? "";
 }
 
 function slugify(text) {
@@ -92,7 +91,7 @@ function yamlString(value) {
 
 async function getAllPages(dataSourceId) {
   const pages = [];
-  let start_cursor = undefined;
+  let start_cursor;
 
   do {
     const response = await notion.dataSources.query({
@@ -119,7 +118,6 @@ async function getPageMarkdown(pageId) {
 async function main() {
   console.log("Connecting to Notion...");
 
-  // A Notion database can contain one or more data sources.
   const database = await notion.databases.retrieve({
     database_id: DATABASE_ID,
   });
@@ -162,10 +160,10 @@ async function main() {
       page.created_time?.slice(0, 10) ||
       new Date().toISOString().slice(0, 10);
 
-    const category = getSelectProperty(page, "Category");
     const description = getTextProperty(page, "Description");
-
     const notionSlug = getTextProperty(page, "Slug");
+    const imageUrl = getUrlProperty(page, "Image URL");
+
     const slug = slugify(notionSlug || title);
 
     publishedSlugs.add(slug);
@@ -176,11 +174,14 @@ async function main() {
 
     let content = markdownResponse.markdown ?? "";
 
-    // Avoid displaying the title twice if Notion returns it as an H1.
     const firstLine = content.split("\n")[0]?.trim();
 
     if (firstLine === `# ${title}`) {
       content = content.split("\n").slice(1).join("\n").trim();
+    }
+
+    if (imageUrl) {
+      content = `![${title}](${imageUrl})\n\n${content}`;
     }
 
     const frontmatter = [
@@ -188,6 +189,7 @@ async function main() {
       `title: ${yamlString(title)}`,
       `description: ${yamlString(description || title)}`,
       `pubDate: ${yamlString(date)}`,
+      ...(imageUrl ? [`imageUrl: ${yamlString(imageUrl)}`] : []),
       "---",
       "",
     ].join("\n");
@@ -201,21 +203,10 @@ async function main() {
     console.log(`✓ Written ${filePath}`);
   }
 
-  // Remove old generated posts that are no longer published.
   const existingFiles = await fs.readdir(BLOG_DIR);
 
   for (const file of existingFiles) {
     if (!file.endsWith(".md")) continue;
-
-    // Don't touch the Astro starter's files yet.
-    const starterFiles = new Set([
-      "first-post.md",
-      "second-post.md",
-      "third-post.md",
-      "markdown-style-guide.md",
-    ]);
-
-    if (starterFiles.has(file)) continue;
 
     const slug = file.replace(/\.md$/, "");
 
