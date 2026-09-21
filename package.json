@@ -17,6 +17,8 @@
     "@astrojs/sitemap": "3.6.1",
     "@notionhq/client": "^5.26.0",
     "astro": "5.16.9",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
     "typescript": "5.9.3"
   },
   "devDependencies": {

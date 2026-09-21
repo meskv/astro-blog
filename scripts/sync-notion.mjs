@@ -161,8 +161,13 @@ async function main() {
       new Date().toISOString().slice(0, 10);
 
     const description = getTextProperty(page, "Description");
+    const category = getSelectProperty(page, "Category");
+
     const notionSlug = getTextProperty(page, "Slug");
+
     const imageUrl = getUrlProperty(page, "Image URL");
+    const imageCredit = getTextProperty(page, "Image Credit");
+    const imageCreditUrl = getUrlProperty(page, "Image Credit URL");
 
     const slug = slugify(notionSlug || title);
 
@@ -180,16 +185,17 @@ async function main() {
       content = content.split("\n").slice(1).join("\n").trim();
     }
 
-    if (imageUrl) {
-      content = `![${title}](${imageUrl})\n\n${content}`;
-    }
-
     const frontmatter = [
       "---",
       `title: ${yamlString(title)}`,
       `description: ${yamlString(description || title)}`,
       `pubDate: ${yamlString(date)}`,
+      ...(category ? [`category: ${yamlString(category)}`] : []),
       ...(imageUrl ? [`imageUrl: ${yamlString(imageUrl)}`] : []),
+      ...(imageCredit ? [`imageCredit: ${yamlString(imageCredit)}`] : []),
+      ...(imageCreditUrl
+        ? [`imageCreditUrl: ${yamlString(imageCreditUrl)}`]
+        : []),
       "---",
       "",
     ].join("\n");

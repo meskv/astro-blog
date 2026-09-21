@@ -58,16 +58,13 @@ const latestPost = posts[0];
               class="featured-card"
             >
               <div class="featured-image">
-                {latestPost.data.imageUrl ? (
-                  <img
-                    src={latestPost.data.imageUrl}
-                    alt={latestPost.data.title}
-                  />
-                ) : (
-                  <div class="image-placeholder">
-                    <span>01</span>
-                  </div>
-                )}
+                <img
+					src={
+						latestPost.data.imageUrl ||
+						"https://images.pexels.com/photos/417173/pexels-photo-417173.jpeg"
+					}
+					alt={latestPost.data.title}
+					/>
               </div>
 
               <div class="featured-content">
@@ -270,36 +267,113 @@ const latestPost = posts[0];
     letter-spacing: -0.025em;
   }
 
-  @media (max-width: 700px) {
+    @media (max-width: 950px) {
     .home {
-      padding: 5rem 1.25rem;
+      padding: 5rem 1.5rem 7rem;
     }
 
     .hero {
-      min-height: auto;
-      padding: 4rem 0 7rem;
+      min-height: 55vh;
+      gap: 2rem;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 8vw, 6rem);
     }
 
     .hero-mark {
-      display: none;
+      width: 85px;
+      height: 85px;
     }
 
     .featured-card {
-      display: block;
-    }
-
-    .featured-image {
-      height: 260px;
+      grid-template-columns: 1fr 1fr;
     }
 
     .featured-content {
-      border-left: 1px solid var(--gray-light);
-      border-top: 0;
       padding: 2rem;
     }
-
-    .statement {
-      margin-top: 7rem;
-    }
   }
+
+  @media (max-width: 700px) {
+  .home {
+    padding: 4rem 1.25rem 6rem;
+  }
+
+  .hero {
+    min-height: auto;
+
+    padding: 3rem 0 6rem;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-mark {
+    display: none;
+  }
+
+  h1 {
+    font-size: clamp(3rem, 14vw, 5rem);
+  }
+
+  .intro {
+    margin-top: 2rem;
+
+    font-size: 1rem;
+    line-height: 1.65;
+  }
+
+  .featured {
+    margin-top: 2rem;
+  }
+
+  .featured-card {
+    display: block;
+  }
+
+  .featured-image {
+    width: 100%;
+    height: 260px;
+  }
+
+  .featured-content {
+    border-left: 1px solid var(--gray-light);
+    border-top: 0;
+
+    padding: 2rem 1.5rem;
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  .statement {
+    margin-top: 6rem;
+  }
+
+  .statement p {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .home {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+
+  .featured-image {
+    height: 220px;
+  }
+
+  .statement p {
+    font-size: 1.6rem;
+  }
+}
 </style>

@@ -85,14 +85,31 @@ import Footer from '../components/Footer.astro';
     margin: 0 0 1.5rem;
   }
 
-  @media (max-width: 600px) {
-    .about {
-      padding: 6rem 1.25rem 5rem;
-    }
-
-    .copy {
-      margin-top: 3.5rem;
-      font-size: 1.05rem;
-    }
+  @media (max-width: 950px) {
+  .about {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
   }
+}
+
+@media (max-width: 700px) {
+  .about {
+    padding: 4rem 1.25rem 6rem;
+  }
+
+  .about h1 {
+    font-size: clamp(3rem, 14vw, 4.5rem);
+  }
+}
+
+@media (max-width: 420px) {
+  .about {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .about h1 {
+    font-size: 3rem;
+  }
+}
 </style>
