@@ -1,8 +1,11 @@
 ---
-title: "The Quiet Power of Starting Again"
+title: "The Quiet Power of Starting Again (1)"
 description: "A reflection on learning, consistency, and why starting again is sometimes the most important step."
 pubDate: "2026-09-21"
+category: "Personal"
+imageUrl: "https://unsplash.com/photos/white-printer-paper-on-brown-wooden-table-vSvECvQFCgA"
 ---
+# The Quiet Power of Starting Again
 There is something strangely powerful about beginning again.
 Not because the second beginning is easier.
 Usually, it isn't.
