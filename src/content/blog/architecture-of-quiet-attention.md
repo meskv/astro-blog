@@ -1,7 +1,7 @@
 ---
 title: "The Architecture of Quiet Attention in a Loud Century"
 description: "An exploration of why depth is becoming rare, why speed feels like progress while resembling drift, and how we might reclaim our attention without retreating to a cabin in the woods."
-pubDate: "2026-09-21"
+pubDate: "2026-09-22"
 category: "Fiction"
 imageUrl: "https://www.google.com/search?q=https://images.unsplash.com/photo-1499750310107-5fef28a66643&utm_source=gemini"
 imageCredit: "Crew"
